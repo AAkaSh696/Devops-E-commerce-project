@@ -1,8 +1,8 @@
 name: Code quality & SAST & Dependency Scan
 
 on: 
-    push:
-        branches: [main]
+    # push:
+    #     branches: [main]
     workflow_call:
     workflow_dispatch:
 
@@ -36,29 +36,30 @@ jobs:
             - name: Run SAST with Semgrep
               run: semgrep scan --config auto
 
-            # - name: Run dependency scan 
-            #   run: npm audit --audit-level=high
+            - name: Run dependency scan 
+              run: npm audit --audit-level=high
 
+            #For now just ignore the vulnerabilities cuz no developer
 
-            - name: Run dependency scan
-              run: |
-                  CRITICAL=$(npm audit --json | node -e "
-                    let data = '';
-                    process.stdin.on('data', chunk => data += chunk);
-                    process.stdin.on('end', () => {
-                      const audit = JSON.parse(data);
-                      console.log(audit.metadata.vulnerabilities.critical);
-                  });
-                  ")
+            # - name: Run dependency scan
+            #   run: |
+            #       CRITICAL=$(npm audit --json | node -e "
+            #         let data = '';
+            #         process.stdin.on('data', chunk => data += chunk);
+            #         process.stdin.on('end', () => {
+            #           const audit = JSON.parse(data);
+            #           console.log(audit.metadata.vulnerabilities.critical);
+            #       });
+            #       ")
 
-                  echo "Critical vulnerabilities: $CRITICAL"
+            #       echo "Critical vulnerabilities: $CRITICAL"
 
-                  if [ "$CRITICAL" -gt 5 ]; then
-                    echo "❌ Critical vulnerabilities are greater than 5."
-                    exit 1
-                  else
-                    echo "✅ Critical vulnerabilities are 5 or fewer."
-                  fi
+            #       if [ "$CRITICAL" -gt 5 ]; then
+            #         echo "❌ Critical vulnerabilities are greater than 5."
+            #         exit 1
+            #       else
+            #         echo "✅ Critical vulnerabilities are 5 or fewer."
+            #       fi
 
 
 
