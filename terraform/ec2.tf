@@ -1,10 +1,10 @@
 resource "aws_key_pair" "deployer" {
-    key_name = "terra-automate-key"
-    public_key = file("../terra-key.pub")
+  key_name   = "terra-automate-key"
+  public_key = file("../terra-key.pub")
 }
 
 resource "aws_default_vpc" "default" {
-  
+
 }
 
 resource "aws_security_group" "allow_user_to_connect" {
@@ -12,7 +12,7 @@ resource "aws_security_group" "allow_user_to_connect" {
   description = "Allow user to connect"
   vpc_id      = aws_default_vpc.default.id
 
-  tags ={
+  tags = {
     Name = "project-sg"
   }
 }
@@ -56,11 +56,11 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic" {
 }
 
 resource "aws_instance" "testinstance" {
-  ami = var.ami_id
-  instance_type = var.instance_type
-  key_name = aws_key_pair.deployer.key_name
+  ami             = var.ami_id
+  instance_type   = var.instance_type
+  key_name        = aws_key_pair.deployer.key_name
   security_groups = [aws_security_group.allow_user_to_connect.name]
-  user_data = file("${path.module}/install_tools.sh")
+  user_data       = file("${path.module}/install_tools.sh")
 
   tags = {
     Name = "Automate-server"

@@ -1,11 +1,11 @@
 variable "ami_id" {
   description = "Holds ami id for EC2 instance"
-  type = string
+  type        = string
 }
 
 variable "instance_type" {
   description = "Holds instance type of ec2 server"
-  type = string
+  type        = string
 }
 
 variable "my_enviroment" {
@@ -14,10 +14,10 @@ variable "my_enviroment" {
 
 variable "volume_size" {
   description = "Holds EBS volume size"
-  type = number
+  type        = number
 }
 
 variable "volume_type" {
   description = "Holds EBS volume type"
-  type = string
+  type        = string
 }
