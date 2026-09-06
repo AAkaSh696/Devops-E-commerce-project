@@ -1,13 +1,13 @@
 name: Code quality & SAST
 
 on: 
-    # push:
-    #     branches: [main]
+    push:
+        branches: [main]
     workflow_call:
     workflow_dispatch:
 
 jobs:
-    Validate-on-diff-os:
+    Code-quality-and-Dependency-Scan:
         runs-on: ${{matrix.os}}
         strategy:
             fail-fast: false
@@ -35,5 +35,8 @@ jobs:
 
             - name: Run SAST with Semgrep
               run: semgrep scan --config auto
+
+            - name: Run dependency scan 
+              run: npm audit --audit-level=high
 
 
