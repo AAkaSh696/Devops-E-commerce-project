@@ -4,6 +4,10 @@ on :
     push:
         branches: [main]
     workflow_dispatch:
+
+permissions:
+  contents: write
+  
 jobs:
     #CI (continuous integeration with security scanning)
     code-quality:
