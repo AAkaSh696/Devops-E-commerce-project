@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: migration
-        image: aakash969/e-commerce-migration:2560f31dae9df9f502a30a05717c6407c7d37442
+        image: aakash969/e-commerce-migration:b4350e1ef0ed8bbb0ec9e2752bb5c548998edd7c
         imagePullPolicy: Always
         env:
         - name: MONGODB_URI
