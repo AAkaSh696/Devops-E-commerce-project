@@ -20,7 +20,7 @@ jobs:
         run: |
           sed -i "s|image: aakash969/e-commerce-app:.*|image: aakash969/e-commerce-app:${{ github.sha }}|g" kubernetes/08-easyshop-deployment.yml
 
-          if [ -f "kubernetes/12-migration-job.yaml" ]; then
+          if [ -f "kubernetes/12-migration-job.yml" ]; then
             sed -i "s|image: aakash969/e-commerce-app-migration:.*|image: aakash969/e-commerce-app-migration:${{ github.sha }}|g" kubernetes/12-migration-job.yml
           fi
 
