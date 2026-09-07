@@ -3,6 +3,7 @@ name: DevSecOps End to End pipeline
 on :
     push:
         branches: [main]
+    workflow_dispatch:
 jobs:
     #CI (continuous integeration with security scanning)
     code-quality:
