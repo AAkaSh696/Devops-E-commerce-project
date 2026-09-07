@@ -1,8 +1,8 @@
 name: End to End pipeline
 
 on :
-    push:
-        branches: [main]
+    # push:
+    #     branches: [main]
     workflow_dispatch:
 
 permissions:
@@ -30,9 +30,6 @@ jobs:
       uses: ./.github/workflows/image-scan.yml
       secrets: inherit
 
-    update-manifests:
-      needs: [trivy]
-      uses: ./.github/workflows/update-manifests.yml
 
 
     
