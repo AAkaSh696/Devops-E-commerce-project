@@ -18,10 +18,10 @@ jobs:
 
       - name: Update Kubernetes Image Tags
         run: |
-          sed -i "s|image: aakash969/e-commerce-app:.*|image: aakash969/e-commerce-app:${{ github.sha }}|g" kubernetes/08-easyshop-deployment.yaml
+          sed -i "s|image: aakash969/e-commerce-app:.*|image: aakash969/e-commerce-app:${{ github.sha }}|g" kubernetes/08-easyshop-deployment.yml
 
           if [ -f "kubernetes/12-migration-job.yaml" ]; then
-            sed -i "s|image: aakash969/e-commerce-app-migration:.*|image: aakash969/e-commerce-app-migration:${{ github.sha }}|g" kubernetes/12-migration-job.yaml
+            sed -i "s|image: aakash969/e-commerce-app-migration:.*|image: aakash969/e-commerce-app-migration:${{ github.sha }}|g" kubernetes/12-migration-job.yml
           fi
 
       - name: Check Changes
@@ -35,8 +35,8 @@ jobs:
           if git diff --quiet; then
             echo "No changes to commit"
           else
-            git add kubernetes/08-easyshop-deployment.yaml
-            git add kubernetes/12-migration-job.yaml
+            git add kubernetes/08-easyshop-deployment.yml
+            git add kubernetes/12-migration-job.yml
 
             git commit -m "Update Kubernetes image tags to ${{ github.sha }}"
 
