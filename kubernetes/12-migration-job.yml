@@ -18,7 +18,7 @@ spec:
       restartPolicy: Never
 
       containers:
-        - image: aakash969/e-commerce-migration:1
+        - image: aakash969/e-commerce-migration:2417b740dd12229ca8975700dbd9b7941fec7edd
           imagePullPolicy: Always
 
           envFrom:
