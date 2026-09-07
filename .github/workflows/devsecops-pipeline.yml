@@ -1,0 +1,32 @@
+name: DevSecOps End to End pipeline
+
+on :
+    push:
+        branches: [main]
+    workflow_dispatch:
+
+jobs:
+    #CI (continuous integeration with security scanning)
+    code-quality:
+        uses: ./.github/workflows/code-quality.yml
+    
+    secrets-scan:
+        uses: ./.github/workflows/secrets-scan.yml
+    
+    docker-scan:
+        uses: ./.github/workflows/docker-lint.yml
+
+    # Build when all security tests passes
+    build:
+        needs: [code-quality, secrets-scan, docker-scan]
+        uses: ./.github/workflows/Docker-build-push.yml
+        secrets: inherit
+
+    trivy:
+        needs: [build]
+        uses: ./.github/workflows/image-scan.yml
+        secrets: inherit
+
+    
+
+    
