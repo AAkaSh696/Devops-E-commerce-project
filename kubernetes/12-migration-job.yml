@@ -20,7 +20,7 @@ spec:
 
       containers:
         - name: db-migration
-          image: aakash969/e-commerce-migration:2417b740dd12229ca8975700dbd9b7941fec7edd
+          image: aakash969/e-commerce-migration:35cbfd2e1d6697be31974031bb932442f53a83eb
           imagePullPolicy: Always
 
           envFrom:
