@@ -1,0 +1,44 @@
+name: Update Kubernetes Manifests
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-manifests:
+    name: Update Image Tags
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Update Kubernetes Image Tags
+        run: |
+          sed -i "s|image: aakash969/e-commerce-app:.*|image: aakash969/e-commerce-app:${{ github.sha }}|g" kubernetes/08-easyshop-deployment.yaml
+
+          if [ -f "kubernetes/12-migration-job.yaml" ]; then
+            sed -i "s|image: aakash969/e-commerce-app-migration:.*|image: aakash969/e-commerce-app-migration:${{ github.sha }}|g" kubernetes/12-migration-job.yaml
+          fi
+
+      - name: Check Changes
+        run: git diff
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git add kubernetes/08-easyshop-deployment.yaml
+            git add kubernetes/12-migration-job.yaml
+
+            git commit -m "Update Kubernetes image tags to ${{ github.sha }}"
+
+            git push origin HEAD:${{ github.ref_name }}
+          fi
