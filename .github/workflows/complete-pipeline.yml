@@ -31,7 +31,7 @@ jobs:
       secrets: inherit
 
     update-manifests:
-      needs: [build,trivy]
+      needs: [trivy]
       uses: ./.github/workflows/update-manifests.yml
 
 
