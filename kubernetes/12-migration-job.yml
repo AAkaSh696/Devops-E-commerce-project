@@ -1,16 +1,29 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: db-migration
+  generateName: db-migration-
   namespace: easyshop
+  annotations:
+    argocd.argoproj.io/hook: PreSync #database migration happens before the application deployment.
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation #ells Argo CD to remove an old migration hook before creating the next one.
 spec:
+  backoffLimit: 3
+
   template:
+    metadata:
+      labels:
+        app: db-migration
+
     spec:
+      restartPolicy: Never
+
       containers:
-      - name: migration
-        image: aakash969/e-commerce-migration:b4350e1ef0ed8bbb0ec9e2752bb5c548998edd7c
-        imagePullPolicy: Always
-        env:
-        - name: MONGODB_URI
-          value: "mongodb://mongodb-service:27017/easyshop"
-      restartPolicy: OnFailure
+        - image: aakash969/e-commerce-migration:1
+          imagePullPolicy: Always
+
+          envFrom:
+            - configMapRef:
+                name: easyshop-config
+
+            - secretRef:
+                name: easyshop-secrets
