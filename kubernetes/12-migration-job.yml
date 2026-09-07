@@ -4,8 +4,9 @@ metadata:
   generateName: db-migration-
   namespace: easyshop
   annotations:
-    argocd.argoproj.io/hook: PreSync #database migration happens before the application deployment.
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation #ells Argo CD to remove an old migration hook before creating the next one.
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+
 spec:
   backoffLimit: 3
 
@@ -18,7 +19,8 @@ spec:
       restartPolicy: Never
 
       containers:
-        - image: aakash969/e-commerce-migration:2417b740dd12229ca8975700dbd9b7941fec7edd
+        - name: db-migration
+          image: aakash969/e-commerce-migration:2417b740dd12229ca8975700dbd9b7941fec7edd
           imagePullPolicy: Always
 
           envFrom:
