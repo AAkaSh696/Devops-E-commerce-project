@@ -9,7 +9,7 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/AAkaSh696/tws-e-commerce-app.git
+    repoURL: https://github.com/AAkaSh696/Devops-E-commerce-project.git
     targetRevision: main
     path: kubernetes
 
