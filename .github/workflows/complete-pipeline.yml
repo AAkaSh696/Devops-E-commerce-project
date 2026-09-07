@@ -1,4 +1,4 @@
-name: DevSecOps End to End pipeline
+name: End to End pipeline
 
 on :
     push:
@@ -7,7 +7,7 @@ on :
 
 permissions:
   contents: write
-  
+
 jobs:
     #CI (continuous integeration with security scanning)
     code-quality:
