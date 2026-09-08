@@ -20,7 +20,7 @@ spec:
       containers:
         - name: easyshop
 
-          image: aakash969/e-commerce-app:90974e302c5703746e0fc3ff358ee6228b00f49c
+          image: aakash969/e-commerce-app:3a9b58a980833f22c6d7553b1008f306968fa821
           imagePullPolicy: Always
 
           ports:
