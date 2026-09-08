@@ -59,7 +59,6 @@ export default function Home({
 }) {
   return (
     <main>
-      <h1>EasyShop - Argo CD Test</h1>
       <HeroSlider heroImages={heroImages} />
       <BannerSlider bannerImages={banners} />
       <ShopCategories />
