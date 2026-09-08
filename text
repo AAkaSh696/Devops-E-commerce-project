@@ -1,1 +1,31 @@
- image: aakash969/e-commerce-migration:b4350e1ef0ed8bbb0ec9e2752bb5c548998edd7c
+#ArgoCD
+kubectl port-forward svc/argocd-server -n argocd 8085:443
+#Application
+kubectl port-forward service/easyshop-service 3000:80 -n easyshop
+kubectl get application easyshop -n argocd
+
+kubectl patch deployment metrics-server -n kube-system --type='strategic' -p '{"spec":{"template":{"spec":{"containers":[{"name":"metrics-server","args":["--cert-dir=/tmp","--secure-port=10250","--kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname","--kubelet-use-node-status-port","--metric-resolution=15s","--kubelet-insecure-tls"]}]}}}}'
+
+kubectl rollout status deployment/metrics-server -n kube-system
+
+kubectl set env deployment/metrics-server -n kube-system KUBELET_INSECURE_TLS=true
+
+@'
+spec:
+  template:
+    spec:
+      containers:
+      - name: metrics-server
+        args:
+        - --cert-dir=/tmp
+        - --secure-port=10250
+        - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+        - --kubelet-use-node-status-port
+        - --metric-resolution=15s
+        - --kubelet-insecure-tls
+'@ | Set-Content metrics-patch.yml
+
+kubectl patch deployment metrics-server -n kube-system --type=strategic --patch-file .\metrics-patch.yml
+
+
+kubectl rollout status deployment/metrics-server -n kube-system
